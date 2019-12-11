@@ -1,0 +1,77 @@
+1-use contact
+2-show collections
+3-db.contactlist.insertMany([{Last name: 'Ben Lahmer', First name: 'Fares', Email:' fares@gmail.com', age:26},{Last name: 'Kefi', First name: 'Seif', Email:'kefi@gmail.com', age:15},{Last name: 'Fatnassi', First name: 'Sarra', Email: 'sarra.f@gmail.com', age:40},{Last name: 'Ben Yahia', First name: 'Rym', age:4},{Last name: 'Cherif', First name: 'Sami', age:3}])
+4-db.contactlist.find()
+5-show dbs
+6-db.contactlist.find(null, {id:0})
+7-db.contactlist.find(null, {id:1})
+8-db.contactlist.find.( { age: { $gt: 18 } } )
+9-db.contactlist.update({"name":"seif"},{"name":"Anis"})
+10-db.contactlist.remove({ "age": {$lt: "5"}})
+11-db.contactlist.find()
+
+---
+
+> use contact
+switched to db contact
+> db.createCollection("contactlist")
+{ "ok" : 1 }
+> show collections
+contactlist
+> db.contactlist.insertMany([{Last name: 'Ben Lahmer', First name: 'Fares', Email:' fares@gmail.com', age:26},{Last name: 'Kefi', First name: 'Seif', Email:'kefi@gmail.com', age:15},{Last name: 'Fatnassi', First name: 'Sarra', Email: 'sarra.f@gmail.com', age:40},{Last name: 'Ben Yahia', First name: 'Rym', age:4},{Last name: 'Cherif', First name: 'Sami', age:3}])
+2019-12-11T14:55:38.338+0100 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:33
+> db.contactlist.insertMany([{Last name: 'Kefi',First name: 'Seif', Email: 'kefi@gmail.com',age: '15'}, {Last name: 'Fatnassi',First name: 'Sarra', Email: 'sarra.f@gmail.com',age: '40'},{Last name: 'Ben Yahia',First name: 'Rym', age: '4'},{Last name: 'Cherif',First name: 'Sami',age: '3'}])
+2019-12-11T14:56:38.574+0100 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:33
+> db.contactlist.insert([{"last name":"Kefi","name":"Anis","email":"kefi@gmail.com","age":"15"},{"last name":"Fatnassi","name":"Sarra","email":"sarra.f@gmail.com","age":"40"},{"last name":"Ben Yahia","name":"Rym","age":"4"},{"last name":"Cherif","name":"Sami","age":"3"}])
+BulkWriteResult({
+	"writeErrors" : [ ],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 4,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+> db.contactlist.find()
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344a"), "last name" : "Kefi", "name" : "Anis", "email" : "kefi@gmail.com", "age" : "15" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344b"), "last name" : "Fatnassi", "name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : "40" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344c"), "last name" : "Ben Yahia", "name" : "Rym", "age" : "4" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344d"), "last name" : "Cherif", "name" : "Sami", "age" : "3" }
+> db.contactlist.find().pretty
+function() {
+    this._prettyShell = true;
+    return this;
+}
+> show dbs
+admin    0.000GB
+config   0.000GB
+contact  0.000GB
+local    0.000GB
+> db.contactlist.find(null, {id:1})
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344a") }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344b") }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344c") }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344d") }
+> db.contactlist.find(null, {id:0})
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344a"), "last name" : "Kefi", "name" : "Anis", "email" : "kefi@gmail.com", "age" : "15" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344b"), "last name" : "Fatnassi", "name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : "40" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344c"), "last name" : "Ben Yahia", "name" : "Rym", "age" : "4" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344d"), "last name" : "Cherif", "name" : "Sami", "age" : "3" }
+> db.find.( { age: { $gt: 18 } } )
+2019-12-11T15:22:03.496+0100 E  QUERY    [js] uncaught exception: SyntaxError: missing name after . operator :
+@(shell):1:8
+> db.contactlist.find.( { age: { $gt: 18 } } )
+2019-12-11T15:22:34.331+0100 E  QUERY    [js] uncaught exception: SyntaxError: missing name after . operator :
+@(shell):1:20
+> db.contactlist.find.( { 'age': { $gt: '18' } } )
+2019-12-11T15:23:01.169+0100 E  QUERY    [js] uncaught exception: SyntaxError: missing name after . operator :
+@(shell):1:20
+> db.contactlist.find({"age": {$gt: 18}}) 
+> db.contactlist.find({"age": {$gt: "18"}})
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344b"), "last name" : "Fatnassi", "name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : "40" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344c"), "last name" : "Ben Yahia", "name" : "Rym", "age" : "4" }
+{ "_id" : ObjectId("5df0f60cda7f00c5013a344d"), "last name" : "Cherif", "name" : "Sami", "age" : "3" }
+
